@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center"><span class="title">Wallarock</span></ion-row>
+    <form class="example-form" [formGroup]="form">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="4" size-xs="12">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="4" size-xs="12">
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="4" size-xs="12">
+          <ion-button expand="block" type="submit" class="ion-no-margin" color="primary"
+                      [disabled]="!form.valid"
+                      (click)="login()">Login
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="4" size-xs="12">
+
+          <ion-button expand="block" type="submit" class="ion-no-margin" color="secondary" routerLink="../register">
+            Crear
+            cuenta
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
+
+

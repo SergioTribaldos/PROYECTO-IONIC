@@ -1,0 +1,17 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title size="small">Selecciona ubicación</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  color="success" (click)="acceptAndClose()">Aceptar</ion-button>
+      <ion-button  color="danger" (click)="cancelAndClose()" >Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <app-map
+    #map
+    (isMapLoaded)="toggleLoading()"
+    (coordinatesSelected)="setCoordinates($event)"
+    [editMode]="true"
+  ></app-map>
+</ion-content>

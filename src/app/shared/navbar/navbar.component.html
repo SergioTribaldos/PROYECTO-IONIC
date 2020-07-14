@@ -1,0 +1,50 @@
+<div class="navbar-container">
+  <div class="logo" (click)="navigateTo('home/all')">
+    W
+  </div>
+
+  <div class="search-container">
+    <div class="input-container">
+      <span class="material-icons search-icon">
+        search
+      </span>
+      <input
+        class="search-input"
+        placeholder="Buscar"
+        (keyup.enter)="searchByName($event)"
+      />
+    </div>
+  </div>
+
+  <div>
+    <mat-chip-list>
+      <mat-chip class="upload-product" (click)="navigateTo('home/upload')"
+        ><span class="material-icons upload-product-icon"> control_point </span
+        >Subir producto</mat-chip
+      >
+      <mat-chip class="upload-product" (click)="navigateTo('user-menu/chat')"
+        ><span class="material-icons upload-product-icon"> chat </span>
+        <span
+          [matBadge]="unreadMessages$ | async"
+          matBadgeOverlap="false"
+          matBadgeColor="warn"
+          >Chat</span
+        >
+      </mat-chip>
+      <mat-chip [matMenuTriggerFor]="appMenu"
+        ><span class="material-icons user-icon"> face </span>Usuario</mat-chip
+      >
+    </mat-chip-list>
+  </div>
+</div>
+<div class="subvar-container" *ngIf="isSubBarActivated$ | async">
+  <app-search-bar></app-search-bar>
+</div>
+
+<mat-menu #appMenu="matMenu">
+  <div (click)="$event.stopPropagation()">
+    <button mat-menu-item (click)="navigateTo('user-menu')">Productos</button>
+    <mat-divider></mat-divider>
+    <div mat-menu-item (click)="logout()">Logout</div>
+  </div>
+</mat-menu>
