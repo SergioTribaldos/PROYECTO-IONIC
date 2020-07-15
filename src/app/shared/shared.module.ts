@@ -15,6 +15,7 @@ import { UserInfoHeaderComponent } from './user-info-header/user-info-header.com
 import { RouterModule } from '@angular/router';
 import { ChatService } from './chat.service';
 import {IonicModule} from '@ionic/angular';
+import {SearchOptionsModalComponent} from '@shared/navbar/search-options-modal/search-options-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {IonicModule} from '@ionic/angular';
     ProductCardSmallComponent,
     ProductDetailComponent,
     UserInfoHeaderComponent,
+    SearchOptionsModalComponent
   ],
     imports: [CommonModule, RouterModule, MaterialModule, NgbModule, IonicModule],
   exports: [
@@ -38,6 +40,7 @@ import {IonicModule} from '@ionic/angular';
     ProductCardSmallComponent,
     ProductDetailComponent,
     UserInfoHeaderComponent,
+    SearchOptionsModalComponent
   ],
 })
 export class SharedModule {}

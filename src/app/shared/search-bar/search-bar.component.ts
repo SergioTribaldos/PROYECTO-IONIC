@@ -3,19 +3,19 @@ import {
   OnInit,
   ViewChild,
   ViewChildren,
-  QueryList,
+  QueryList, Input,
 } from '@angular/core';
 import {
   Category,
   ProductTags,
   Condition,
 } from '../../home/product/model/product';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { BUTTONS_LIST } from './constants';
-import { AppState } from 'src/app/reducers';
-import { Store } from '@ngrx/store';
-import { PRODUCT_ACTIONS } from '../../home/product/store/product.actions';
+import {FormGroup, FormBuilder} from '@angular/forms';
+import {MatMenuTrigger} from '@angular/material/menu';
+import {BUTTONS_LIST} from './constants';
+import {AppState} from 'src/app/reducers';
+import {Store} from '@ngrx/store';
+import {PRODUCT_ACTIONS} from '../../home/product/store/product.actions';
 
 @Component({
   selector: 'app-search-bar',
@@ -23,11 +23,12 @@ import { PRODUCT_ACTIONS } from '../../home/product/store/product.actions';
   styleUrls: ['./search-bar.component.css'],
 })
 export class SearchBarComponent implements OnInit {
-  categoryList: Object = Object.entries(Category);
-  conditionList: Object = Object.values(Condition);
+  @Input() form: FormGroup;
+
+  categoryList = Object.entries(Category);
+  conditionList = Object.values(Condition);
   tagsList: any;
   conditionTagsList: any;
-  form: FormGroup;
   buttonsList = BUTTONS_LIST;
 
   @ViewChildren(MatMenuTrigger) menuList: QueryList<MatMenuTrigger>;
@@ -45,7 +46,8 @@ export class SearchBarComponent implements OnInit {
     this.conditionTagsList = this.conditionList;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   unsetFormControlValue(formControlNames: string[]) {
     for (const formControlName of formControlNames) {
@@ -65,11 +67,11 @@ export class SearchBarComponent implements OnInit {
   }
 
   setSearchTags(val) {
-    this.form.patchValue({ searchTags: val });
+    this.form.patchValue({searchTags: val});
   }
 
   setConditionTags(val) {
-    this.form.patchValue({ conditionTags: val });
+    this.form.patchValue({conditionTags: val});
   }
 
   closeMenu() {
@@ -79,11 +81,11 @@ export class SearchBarComponent implements OnInit {
   search() {
     this.deleteFormNullValues();
     const hasSearchFilters = Object.values(this.form.controls).some(
-      ({ value }) => value
+      ({value}) => value
     );
 
     this.store.dispatch(
-      PRODUCT_ACTIONS.setHasSearchFilters({ hasSearchFilters })
+      PRODUCT_ACTIONS.setHasSearchFilters({hasSearchFilters})
     );
 
     hasSearchFilters
@@ -101,7 +103,7 @@ export class SearchBarComponent implements OnInit {
 
   searchProductsWithParams() {
     this.store.dispatch(
-      PRODUCT_ACTIONS.searchProducts({ searchParams: this.form.value })
+      PRODUCT_ACTIONS.searchProducts({searchParams: this.form.value})
     );
   }
 

@@ -1,3 +1,42 @@
+<ion-card color="light" *ngIf="!isUserProduct; else userProducts"
+          (click)="goTo()">
+  <img
+    class="product-img"
+    [src]="APIENDPOINT_BACKEND + '/' + product.pictures[0].url"
+  />
+  <ion-card-header>
+    <ion-card-title>{{product.title}}</ion-card-title>
+    <ion-card-subtitle>{{product.price}} €</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>    {{product.description}}
+    </p>
+  </ion-card-content>
+
+  <ion-footer>
+    <ion-toolbar color="tertiary">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="location"></ion-icon>
+            <span>{{ product.distance_to_user }} km</span>
+          </ion-col>
+          <ion-col>
+            <ion-chip [color]="setConditionClass()">
+              <ion-label>{{product.condition}}</ion-label>
+            </ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-card>
+
+<!--
+
 <mat-card
   *ngIf="!isUserProduct; else userProducts"
   class="example-card mat-elevation-z10"
@@ -36,6 +75,7 @@
     </div>
   </div>
 </mat-card>
+-->
 
 <!-- USER PRODUCTS -->
 <ng-template #userProducts>
