@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Product } from '../product/model/product';
 import { select, Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { PRODUCT_ACTIONS } from '../product/store/product.actions';
 import { takeUntil } from 'rxjs/operators';
 import { CHAT_ACTIONS } from 'src/app/user-menu/chat/store/chat.actions';
 import { ChatService } from '@shared/chat.service';
+import {IonInfiniteScroll} from '@ionic/angular';
 
 @Component({
   selector: 'app-main',
@@ -19,6 +20,8 @@ import { ChatService } from '@shared/chat.service';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit, OnDestroy {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
   products$: Observable<Product[]>;
   loading$: Observable<boolean>;
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -26,10 +29,7 @@ export class MainComponent implements OnInit, OnDestroy {
   resultsSkipped: number;
   hasSearchFilters: boolean;
 
-  throttle = 40;
-  scrollDistance = 1;
-  scrollUpDistance = 2;
-  direction = '';
+
 
   constructor(
     private store: Store<AppState>,
@@ -59,6 +59,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown() {
+    this.infiniteScroll.complete()
     if (!this.hasSearchFilters) {
       this.store.dispatch(PRODUCT_ACTIONS.loadMoreProducts());
     }

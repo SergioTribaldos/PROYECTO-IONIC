@@ -1,22 +1,18 @@
 <ion-content>
-  <div
-    infinite-scroll
-    [infiniteScrollDistance]="scrollDistance"
-    [infiniteScrollUpDistance]="scrollUpDistance"
-    [infiniteScrollThrottle]="throttle"
-    (scrolled)="onScrollDown()"
+  <app-product-card-small
+    *ngFor="let product of products$ | async"
+    [product]="product"
+  >
+  </app-product-card-small>
+
+  <ion-infinite-scroll
+    (ionInfinite)="onScrollDown()"
     class="product-cards-container"
     *ngIf="(products$ | async).length != 0; else notFound"
   >
-    <app-product-card-small
-      *ngFor="let product of products$ | async"
-      [product]="product"
-    >
-    </app-product-card-small>
-    <div *ngIf="loading$ | async">
-      <mat-spinner></mat-spinner>
-    </div>
-  </div>
+ <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Cargando...">
+ </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <ng-template #notFound>
     <div class="not-found-container">
