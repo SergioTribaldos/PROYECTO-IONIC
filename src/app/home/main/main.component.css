@@ -7,3 +7,6 @@ img {
   margin: auto;
   opacity: 0.6;
 }
+ion-col{
+  padding: 0 !important;
+}
