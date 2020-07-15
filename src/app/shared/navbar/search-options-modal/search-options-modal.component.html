@@ -1,0 +1,67 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Filtrar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <div>Precio</div>
+          </ion-row>
+          <ion-row>
+            <ion-range (ionChange)="priceChanged($event)" id="dual-range" dual-knobs step="10" min="0" max="5000" pin
+                       color="primary">
+              <span slot="start">Min</span>
+              <span slot="end">Max</span>
+            </ion-range>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <div>Distancia máxima</div>
+          </ion-row>
+          <ion-row>
+            <ion-range formControlName="maxDistance" (ionChange)="priceChanged($event)" step="10" min="0" max="1500" pin
+                       color="primary">
+            </ion-range>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Categorías</ion-label>
+        <ion-select (ionChange)="form.get('searchTags').setValue([$event.target.value])"
+                    (ionCancel)="form.get('searchTags').setValue(null)"
+                    okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let category of categoryList" [value]="category">{{category}}</ion-select-option>
+
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Estado</ion-label>
+        <ion-select (ionChange)="form.get('conditionTags').setValue([$event.target.value])"
+                    (ionCancel)="form.get('conditionTags').setValue(null)"
+                    okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let condition of conditionList" [value]="condition">{{condition}}</ion-select-option>
+
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+  </form>
+  {{form.getRawValue()|json}}
+</ion-content>
+
+
+<app-search-bar [form]="" style="visibility: hidden"></app-search-bar>
