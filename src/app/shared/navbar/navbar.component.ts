@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   unreadMessages$: Observable<number>;
   @Output() chatButtonClicked = new EventEmitter();
 
+  visibleSearchOptions=true;
   user$: Observable<User>;
   isSubBarActivated$: Observable<boolean>;
 
@@ -74,5 +75,9 @@ export class NavbarComponent implements OnInit {
 
     return await modal.present();
 
+  }
+
+  aa($event: any) {
+    console.log($event)
   }
 }

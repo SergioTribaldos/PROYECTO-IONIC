@@ -1,10 +1,20 @@
 @import "../../../custom-theme.scss";
-ion-searchbar{
-  --box-shadow:none;
-  --border-radius:10px
+
+ion-searchbar {
+  --box-shadow: none;
+  --border-radius: 10px
 }
-ion-toolbar{
-  --box-shadow:none;
+
+ion-toolbar {
+  --box-shadow: none;
+}
+.searchbar-icon{
+  position: absolute;
+  z-index: 200;
+  color: black;
+  font-size: 20px;
+  top: 18px;
+  left: 23px;
 }
 ion-fab-button {
   position: absolute;
@@ -15,8 +25,9 @@ ion-fab-button {
   --box-shadow: none;
 
 }
-ion-icon{
+
+ion-icon {
   font-size: 270%;
-  color:var(--ion-color-primary-shade)
+  color: var(--ion-color-primary-shade)
 
 }

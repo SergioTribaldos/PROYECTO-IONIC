@@ -1,8 +1,19 @@
-<ion-header >
+<ion-header>
   <ion-toolbar color="primary">
-
-    <ion-searchbar color="light" animated placeholder="Buscar"></ion-searchbar>
-    <ion-fab-button color="light" (click)="showOptions()"><ion-icon name="options-outline"></ion-icon></ion-fab-button>
+    <div *ngIf="visibleSearchOptions; else backButton"><ion-icon class="searchbar-icon" name="search-outline"></ion-icon></div>
+    <ng-template #backButton><ion-icon class="searchbar-icon" name="arrow-back-outline"></ion-icon></ng-template>
+    <ion-searchbar #searchBar color="light" animated clear-icon="close-circle" placeholder="Buscar"
+                   searchIcon="none"
+                   (ionFocus)="visibleSearchOptions=false"
+                   (ionBlur)="visibleSearchOptions=true"
+                   (search)="searchByName($event)">
+    </ion-searchbar>
+    <ion-fab-button #searchOptions color="light"
+                    (click)="showOptions()"
+                    [ngStyle]="{'visibility':visibleSearchOptions?'visible':'hidden'}"
+    >
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-fab-button>
   </ion-toolbar>
 </ion-header>
 
