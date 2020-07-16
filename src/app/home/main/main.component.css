@@ -10,3 +10,13 @@ img {
 ion-col{
   padding: 0 !important;
 }
+
+.footer-action-icon{
+  font-size: 30px;
+  display: block;
+  margin: auto;
+}
+.footer-action-description{
+  font-size: 11px;
+  text-align: center;
+}

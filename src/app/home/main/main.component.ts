@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CHAT_ACTIONS } from 'src/app/user-menu/chat/store/chat.actions';
 import { ChatService } from '@shared/chat.service';
 import {IonInfiniteScroll} from '@ionic/angular';
+import {AuthActions} from '../../auth/store/action-types';
 
 @Component({
   selector: 'app-main',
@@ -63,5 +64,9 @@ export class MainComponent implements OnInit, OnDestroy {
     if (!this.hasSearchFilters) {
       this.store.dispatch(PRODUCT_ACTIONS.loadMoreProducts());
     }
+  }
+
+  logout() {
+    this.store.dispatch(AuthActions.logout());
   }
 }
