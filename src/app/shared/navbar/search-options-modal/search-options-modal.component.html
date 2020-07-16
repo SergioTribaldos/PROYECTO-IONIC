@@ -1,9 +1,6 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
     <ion-title>Filtrar</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -16,7 +13,7 @@
             <div>Precio</div>
           </ion-row>
           <ion-row>
-            <ion-range (ionChange)="priceChanged($event)" id="dual-range" dual-knobs step="10" min="0" max="5000" pin
+            <ion-range id="dual-range" dual-knobs step="10" min="0" max="5000" pin
                        color="primary">
               <span slot="start">Min</span>
               <span slot="end">Max</span>
@@ -31,9 +28,11 @@
             <div>Distancia máxima</div>
           </ion-row>
           <ion-row>
-            <ion-range formControlName="maxDistance" (ionChange)="priceChanged($event)" step="10" min="0" max="1500" pin
+            <ion-range formControlName="maxDistance" step="10" min="0" max="1500" pin
                        color="primary">
+              <span slot="end">Km</span>
             </ion-range>
+
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -53,15 +52,19 @@
         <ion-select (ionChange)="form.get('conditionTags').setValue([$event.target.value])"
                     (ionCancel)="form.get('conditionTags').setValue(null)"
                     okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option *ngFor="let condition of conditionList" [value]="condition">{{condition}}</ion-select-option>
+          <ion-select-option *ngFor="let condition of conditionList"
+                             [value]="condition">{{condition}}</ion-select-option>
 
         </ion-select>
       </ion-item>
     </ion-list>
 
   </form>
-  {{form.getRawValue()|json}}
 </ion-content>
+<ion-footer class="ion-no-border">
+  <ion-button color="success" (click)="acceptAndClose()">Aplicar filtros</ion-button>
+  <ion-button color="danger" (click)="cancelAndClose()">Borrar filtros</ion-button>
+</ion-footer>
 
 
 <app-search-bar [form]="" style="visibility: hidden"></app-search-bar>

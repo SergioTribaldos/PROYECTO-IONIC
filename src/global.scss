@@ -35,10 +35,6 @@
   src: url('./assets/Montserrat-Regular.ttf') format('truetype');
 }
 
-html, body {
-
-}
-
 * {
   font-family: "Montserrat" !important;
 }
@@ -47,6 +43,14 @@ html, body {
   font-family: "Monoton";
 }
 
+ion-card{
+  background: var(--ion-color-light);
+}
+
 ion-app {
   --ion-background-color: #eeeeee;
+}
+
+.dark{
+  color: var(--ion-color-dark);
 }

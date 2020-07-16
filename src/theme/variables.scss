@@ -23,7 +23,7 @@ $font-family-wp-base: 'Montserrat' !default;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #483e33;
+  --ion-color-secondary-shade: #628302;
   --ion-color-secondary-tint: #665948;
 
   /** tertiary **/
@@ -132,7 +132,7 @@ $font-family-wp-base: 'Montserrat' !default;
     --ion-color-danger-shade: #e04055;
     --ion-color-danger-tint: #ff5b71;
 
-    --ion-color-dark: #f4f5f8;
+    --ion-color-dark: #000000;
     --ion-color-dark-rgb: 244, 245, 248;
     --ion-color-dark-contrast: #000000;
     --ion-color-dark-contrast-rgb: 0, 0, 0;
@@ -237,6 +237,3 @@ $font-family-wp-base: 'Montserrat' !default;
 
 }
 
-ion-card {
-  height: 400px;
-}

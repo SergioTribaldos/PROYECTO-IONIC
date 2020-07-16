@@ -9,7 +9,7 @@ import { ChipsListComponent } from './chips-list/chips-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { ProductCardSmallComponent } from './product-card-small/product-card-small.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
+import {ImageModal, ProductDetailComponent} from './product-detail/product-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserInfoHeaderComponent } from './user-info-header/user-info-header.component';
 import { RouterModule } from '@angular/router';
@@ -28,7 +28,8 @@ import {SearchOptionsModalComponent} from '@shared/navbar/search-options-modal/s
     ProductCardSmallComponent,
     ProductDetailComponent,
     UserInfoHeaderComponent,
-    SearchOptionsModalComponent
+    SearchOptionsModalComponent,
+    ImageModal
   ],
     imports: [CommonModule, RouterModule, MaterialModule, NgbModule, IonicModule],
   exports: [
@@ -40,7 +41,8 @@ import {SearchOptionsModalComponent} from '@shared/navbar/search-options-modal/s
     ProductCardSmallComponent,
     ProductDetailComponent,
     UserInfoHeaderComponent,
-    SearchOptionsModalComponent
+    SearchOptionsModalComponent,
+    ImageModal
   ],
 })
 export class SharedModule {}

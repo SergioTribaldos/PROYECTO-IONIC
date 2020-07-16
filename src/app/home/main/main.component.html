@@ -1,29 +1,29 @@
+<app-navbar></app-navbar>
 <ion-content>
-<ion-grid>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size-xs="12" size-md="4" size-lg="3" *ngFor="let product of products$ | async" >
-      <app-product-card-small
-
-        [product]="product"
-      >
-      </app-product-card-small>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xs="12" size-md="4" size-lg="3" *ngFor="let product of products$ | async">
+        <app-product-card-small
+          [product]="product"
+        >
+        </app-product-card-small>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-infinite-scroll
     (ionInfinite)="onScrollDown()"
     class="product-cards-container"
     *ngIf="(products$ | async).length != 0; else notFound"
   >
- <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Cargando...">
- </ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Cargando...">
+    </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
   <ng-template #notFound>
     <div class="not-found-container">
       <h2>No se ha encontrado nada!</h2>
-      <img src="assets/no-results.png" />
+      <img src="assets/no-results.png"/>
     </div>
   </ng-template>
 </ion-content>

@@ -70,10 +70,9 @@ export class NavbarComponent implements OnInit {
   async showOptions() {
     const modal = await this.modalController.create({
       component: SearchOptionsModalComponent,
-      componentProps: {
-
-      }
     });
+
     return await modal.present();
+
   }
 }

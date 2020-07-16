@@ -1,12 +1,19 @@
 img{
   border: 0;
   width: 100%;
-  height: 30%;
+  height: 160px;
   object-fit: cover;
 }
-
+.image-header{
+  padding: 0;
+}
+ion-card-title{
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 ion-card-content{
-  height: 35%;
+  height: 23%;
 }
 ion-card-content p{
   overflow: hidden;
@@ -19,5 +26,13 @@ ion-col{
 }
 ion-chip{
   background: white;
+}
+
+ion-card {
+  height: 400px;
+}
+
+ion-card-subtitle{
+  font-size: 140%;
 }
 

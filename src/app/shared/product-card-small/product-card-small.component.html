@@ -1,81 +1,41 @@
-<ion-card color="light" *ngIf="!isUserProduct; else userProducts"
+<ion-card *ngIf="!isUserProduct; else userProducts"
           (click)="goTo()">
+<ion-card-header class="image-header">
   <img
     class="product-img"
     [src]="APIENDPOINT_BACKEND + '/' + product.pictures[0].url"
   />
+</ion-card-header>
   <ion-card-header>
+
     <ion-card-title>{{product.title}}</ion-card-title>
-    <ion-card-subtitle>{{product.price}} €</ion-card-subtitle>
+    <ion-card-subtitle color="secondary">{{product.price}} €</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    <p>    {{product.description}}
+    <p>
+      {{product.description}}
     </p>
   </ion-card-content>
 
   <ion-footer>
-    <ion-toolbar color="tertiary">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-icon name="location"></ion-icon>
-            <span>{{ product.distance_to_user }} km</span>
-          </ion-col>
-          <ion-col>
-            <ion-chip [color]="setConditionClass()">
-              <ion-label>{{product.condition}}</ion-label>
-            </ion-chip>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="dark">
+          <ion-icon name="location"></ion-icon>
+          <span>{{ product.distance_to_user }} km</span>
+        </ion-col>
+        <ion-col>
+          <ion-chip outline [color]="setConditionClass()">
+            <ion-label>{{product.condition}}</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-footer>
 
 </ion-card>
 
-<!--
-
-<mat-card
-  *ngIf="!isUserProduct; else userProducts"
-  class="example-card mat-elevation-z10"
-  fxLayout="row"
-  (click)="goTo()"
->
-  <div class="img-container">
-    <img
-      class="product-img"
-      [src]="APIENDPOINT_BACKEND + '/' + product.pictures[0].url"
-    />
-  </div>
-
-  <div class="info-container">
-    <div class="info-body">
-      <h2>{{ product.title }}</h2>
-      <h2 class="price">{{ product.price }} €</h2>
-      <div class="description">{{ resumedDescriptionText }}</div>
-    </div>
-
-    <div class="info-footer" fxLayoutAlign="space-around center">
-      <div fxFlex="50%">
-        <span>
-          <img class="location-icon" src="assets/location-icon.svg" />
-          <span style="vertical-align: middle;"
-            >{{ product.distance_to_user }} km</span
-          >
-        </span>
-      </div>
-
-      <div fxFlex="50%" fxLayoutAlign="end center">
-        <div class="condition" [ngClass]="setConditionClass()">
-          {{ product.condition }}
-        </div>
-      </div>
-    </div>
-  </div>
-</mat-card>
--->
 
 <!-- USER PRODUCTS -->
 <ng-template #userProducts>
@@ -94,7 +54,7 @@
     <div class="info-container">
       <div class="info-body">
         <h2>{{ product.title }}</h2>
-        <h3>{{ product.price }} €</h3>
+        <h3 color="?">{{ product.price }} €</h3>
         <div class="description">{{ resumedDescriptionText }}</div>
       </div>
 
