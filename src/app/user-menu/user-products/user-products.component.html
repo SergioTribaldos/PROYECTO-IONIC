@@ -1,3 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Tus productos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/all"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xs="12" size-md="4" size-lg="3" *ngFor="let product of products$ | async">
+        <app-product-card-small
+          [product]="product"
+        >
+        </app-product-card-small>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!--
 <h1>Tus productos</h1>
 <div class="product-cards-container">
   <app-product-card-small
@@ -8,3 +29,4 @@
   >
   </app-product-card-small>
 </div>
+-->

@@ -18,9 +18,6 @@ export class ProductCardSmallComponent implements OnInit {
   @Input()
   isUserProduct: boolean;
 
-  @Output()
-  deleteProductEmitter = new EventEmitter<number>();
-
   resumedDescriptionText: string;
   APIENDPOINT_BACKEND: string;
 
@@ -44,8 +41,4 @@ export class ProductCardSmallComponent implements OnInit {
     return setConditionClass(this.product.condition);
   }
 
-  deleteProduct(event) {
-    event.stopPropagation();
-    this.deleteProductEmitter.emit(this.product.id);
-  }
 }

@@ -15,6 +15,7 @@ import { USER_PRODUCT_ACTIONS } from '../store/user-product.actions';
   templateUrl: './user-products.component.html',
   styleUrls: ['./user-products.component.css'],
 })
+
 export class UserProductsComponent implements OnInit {
   products$: Observable<Product[]>;
 

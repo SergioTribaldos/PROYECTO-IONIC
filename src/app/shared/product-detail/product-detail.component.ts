@@ -1,6 +1,6 @@
-import {Component, OnInit, Inject, Input} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable, combineLatest} from 'rxjs';
+import {Component, OnInit, Inject, Input, OnDestroy} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {Observable, combineLatest, Subscription} from 'rxjs';
 import {AppState} from 'src/app/reducers';
 import {ActivatedRoute} from '@angular/router';
 import {
@@ -9,13 +9,14 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import {environment} from 'src/environments/environment';
-import {map, tap} from 'rxjs/operators';
+import {map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
 import {Product} from 'src/app/home/product/model/product';
 import {selectOneProduct} from 'src/app/home/product/store/product.selector';
 import {PRODUCT_ACTIONS} from 'src/app/home/product/store/product.actions';
 import {setConditionClass} from 'src/app/home/product/constants/functions';
-import {selectOneUserProduct} from 'src/app/user-menu/store/user-product.selectors';
-import {ModalController} from '@ionic/angular';
+import {selectAllUserProducts, selectOneUserProduct, selectUserProducts} from 'src/app/user-menu/store/user-product.selectors';
+import {AlertController, ModalController} from '@ionic/angular';
+import {USER_PRODUCT_ACTIONS} from '../../user-menu/store/user-product.actions';
 
 @Component({
   selector: 'image-modal',
@@ -55,13 +56,15 @@ export class ImageModal {
 })
 export class ProductDetailComponent implements OnInit {
   product$: Observable<Product>;
+  isUserProduct$: Observable<boolean>;
   toggleExpandMap = false;
   APIENDPOINT_BACKEND;
 
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public alertController: AlertController
   ) {
   }
 
@@ -70,8 +73,8 @@ export class ProductDetailComponent implements OnInit {
     const queryParams = this.route.snapshot.params.id;
 
     this.product$ = combineLatest(
-      this.store.select(selectOneProduct(queryParams)),
-      this.store.select(selectOneUserProduct(queryParams))
+      [this.store.select(selectOneProduct(queryParams)),
+              this.store.select(selectOneUserProduct(queryParams))]
     ).pipe(
       map(([one, two]) => one || two),
       tap((product) => {
@@ -80,6 +83,16 @@ export class ProductDetailComponent implements OnInit {
         );
       })
     );
+
+    this.isUserProduct$ = this.store.pipe(select(selectUserProducts))
+      .pipe(
+        withLatestFrom(this.product$),
+        map(([userProducts, selectedProduct]) => {
+          return userProducts.some(({id}) => id === selectedProduct.id);
+        })
+      )
+
+
   }
 
   setConditionClass(condition) {
@@ -87,9 +100,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   async openDialog(image) {
-    /* this.dialog.open(DialogOverviewExampleDialog, {
-       data: this.APIENDPOINT_BACKEND + '/' + image,
-     });*/
 
     const modal = await this.modalController.create({
       component: ImageModal,
@@ -99,8 +109,32 @@ export class ProductDetailComponent implements OnInit {
 
   }
 
-  /*expandMap();
-  {
-    this.toggleExpandMap = !this.toggleExpandMap;
-  }*/
+  deleteProduct() {
+    this.presentAlert()
+  }
+
+ private async presentAlert() {
+   const alert = await this.alertController.create({
+     message: 'Desea borrar el producto?',
+     buttons: [
+       {
+         text: 'Cancelar',
+         role: 'cancel',
+       }, {
+         text: 'Confirmar',
+         handler: () => {
+           this.product$.pipe(
+             take(1),
+             tap((product)=>{
+               this.store.dispatch(
+                 USER_PRODUCT_ACTIONS.deleteUserProduct({ productId: product.id }))
+             })
+           ).subscribe()
+         }
+       }
+     ]
+   });
+
+   await alert.present();
+  }
 }

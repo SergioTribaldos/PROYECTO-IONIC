@@ -26,7 +26,7 @@
           <ion-col class="ion-justify-content-center">
             <span class="date-published">{{ product.uploaded_at | date: "dd-LLL-yy" }}</span>
           </ion-col>
-          <ion-col>
+          <ion-col size="6">
             <ion-row class="ion-justify-content-center">
               <ion-chip
                 outline
@@ -49,7 +49,6 @@
     </ion-card-content>
   </ion-card>
 
-
   <ion-card>
     <ion-card-header>Localización</ion-card-header>
     <ion-card-content>
@@ -65,10 +64,18 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-<ion-footer class="ion-no-border">
+<ion-footer *ngIf="!(isUserProduct$|async);else deleteProductContainer" class="ion-no-border">
   <ion-button color="secondary" expand="block" [routerLink]="['/user-menu/chat']"
               [queryParams]="{sellerId: (product$|async).user.id, productId: (product$|async).id}">
     Chat
   </ion-button>
 </ion-footer>
+
+<ng-template #deleteProductContainer>
+  <ion-footer class="ion-no-border">
+    <ion-button color="danger" expand="block" (click)="deleteProduct()">
+      Borrar producto
+    </ion-button>
+  </ion-footer>
+</ng-template>
 

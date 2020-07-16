@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
 import { MaterialModule } from '@shared/material/material.module';
 import { ChatComponent } from './chat/chat.component';
+import {IonicModule} from '@ionic/angular';
 
 const routes: Routes = [
   {
@@ -30,12 +31,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [UserMenuComponent, UserProductsComponent, ChatComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    MaterialModule,
-    RouterModule.forChild(routes),
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        MaterialModule,
+        RouterModule.forChild(routes),
+        IonicModule,
+    ],
 })
 export class UserMenuModule {}
