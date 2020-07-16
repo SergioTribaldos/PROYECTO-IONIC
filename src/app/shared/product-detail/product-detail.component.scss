@@ -1,0 +1,35 @@
+
+ion-slides {
+  height: 40%;
+}
+
+img {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+ion-card{
+  background: var(--ion-color-light);
+}
+.map-container {
+  height: 200px;
+}
+ion-grid{padding: 0}
+
+.viewed-times-container,.date-published{
+  display: inline;
+  color: var(--ion-color-dark);
+}
+ion-icon{
+  vertical-align: middle;
+  font-size: 182%;
+  margin-right: 4px;
+}
+ion-icon+span{
+  display: inline;
+  vertical-align: middle;
+}
+
+ion-card-subtitle{
+  font-size: 140%;
+}

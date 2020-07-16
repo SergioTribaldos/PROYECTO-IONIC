@@ -1,36 +1,57 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, combineLatest } from 'rxjs';
-import { AppState } from 'src/app/reducers';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, Inject, Input} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable, combineLatest} from 'rxjs';
+import {AppState} from 'src/app/reducers';
+import {ActivatedRoute} from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { environment } from 'src/environments/environment';
-import { map, tap } from 'rxjs/operators';
-import { Product } from 'src/app/home/product/model/product';
-import { selectOneProduct } from 'src/app/home/product/store/product.selector';
-import { PRODUCT_ACTIONS } from 'src/app/home/product/store/product.actions';
-import { setConditionClass } from 'src/app/home/product/constants/functions';
-import { selectOneUserProduct } from 'src/app/user-menu/store/user-product.selectors';
+import {environment} from 'src/environments/environment';
+import {map, tap} from 'rxjs/operators';
+import {Product} from 'src/app/home/product/model/product';
+import {selectOneProduct} from 'src/app/home/product/store/product.selector';
+import {PRODUCT_ACTIONS} from 'src/app/home/product/store/product.actions';
+import {setConditionClass} from 'src/app/home/product/constants/functions';
+import {selectOneUserProduct} from 'src/app/user-menu/store/user-product.selectors';
+import {ModalController} from '@ionic/angular';
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  template: '<img style="height:800px;max-width:100%" [src]="data">',
+  selector: 'image-modal',
+  template: `
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="end">
+          <ion-button (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <img style="height: 100%; width: 100%;object-fit: contain;" [src]="image">
+    </ion-content>
+
+  `,
 })
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+export class ImageModal {
+  @Input() image: string;
+
+  constructor(private modalController: ModalController
+  ) {
+  }
+
+  close() {
+    this.modalController.dismiss();
+  }
+
 }
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css'],
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
   product$: Observable<Product>;
@@ -40,8 +61,9 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {}
+    private modalController: ModalController
+  ) {
+  }
 
   ngOnInit(): void {
     this.APIENDPOINT_BACKEND = environment.APIENDPOINT_BACKEND;
@@ -54,7 +76,7 @@ export class ProductDetailComponent implements OnInit {
       map(([one, two]) => one || two),
       tap((product) => {
         this.store.dispatch(
-          PRODUCT_ACTIONS.productViewed({ productId: product.id })
+          PRODUCT_ACTIONS.productViewed({productId: product.id})
         );
       })
     );
@@ -64,13 +86,21 @@ export class ProductDetailComponent implements OnInit {
     return setConditionClass(condition);
   }
 
-  openDialog(image): void {
-    this.dialog.open(DialogOverviewExampleDialog, {
-      data: this.APIENDPOINT_BACKEND + '/' + image,
+  async openDialog(image) {
+    /* this.dialog.open(DialogOverviewExampleDialog, {
+       data: this.APIENDPOINT_BACKEND + '/' + image,
+     });*/
+
+    const modal = await this.modalController.create({
+      component: ImageModal,
+      componentProps: {image: this.APIENDPOINT_BACKEND + '/' + image}
     });
+    return await modal.present();
+
   }
 
-  expandMap() {
+  /*expandMap();
+  {
     this.toggleExpandMap = !this.toggleExpandMap;
-  }
+  }*/
 }

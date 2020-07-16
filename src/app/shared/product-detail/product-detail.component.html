@@ -1,4 +1,75 @@
-<div class="card-container">
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="product$ | async as product" slot="fixed">
+  <ion-card>
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let image of product.pictures"><img
+        (click)="openDialog(image.url)"
+        [src]="APIENDPOINT_BACKEND + '/' + image.url"
+      /></ion-slide>
+    </ion-slides>
+    <ion-card-header>
+      <ion-card-title>{{product.title}}</ion-card-title>
+      <ion-card-subtitle color="secondary">{{product.price}} €</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{product.description}}</p>
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col class="ion-justify-content-center" >
+            <span class="date-published">{{ product.uploaded_at | date: "dd-LLL-yy" }}</span>
+          </ion-col>
+          <ion-col>
+            <ion-row class="ion-justify-content-center">
+              <ion-chip
+                outline
+                class="condition condition-big"
+                [color]="setConditionClass(product.condition)"
+              >{{ product.condition }}</ion-chip
+              >
+            </ion-row>
+          </ion-col>
+          <ion-col>
+            <ion-row class="ion-justify-content-end">
+              <span class="viewed-times-container">
+                <ion-icon
+                  name="eye-outline"></ion-icon>
+                <span>{{ product.viewed_times }}</span>
+              </span></ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-header>Localización</ion-card-header>
+    <ion-card-content>
+      <div
+        class="map-container"
+        [ngStyle]="toggleExpandMap ? { height: '400px' } : { height: '200px' }"
+      >
+        <app-map
+          [editMode]="false"
+          [currentCoords]="{ lat: product.lat, lng: product.lng }"
+        ></app-map>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer class="ion-no-border" >
+ <ion-button color="secondary" expand="block">
+   Chat
+ </ion-button>
+</ion-footer>
+<!--<div class="card-container">
   <mat-card *ngIf="product$ | async as product">
     <mat-card-content>
       <app-user-info-header [user]="product.user" [product]="product">
@@ -62,4 +133,4 @@
       ></app-map>
     </div>
   </mat-card>
-</div>
+</div>-->
