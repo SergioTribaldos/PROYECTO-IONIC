@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import { AppState } from 'src/app/reducers';
 import { Store, select } from '@ngrx/store';
 import { getUserId } from 'src/app/auth/store/auth.selectors';
@@ -24,31 +24,25 @@ export class ChatComponent implements OnInit {
   serverConversations$: Observable<ProductMiniature[]>;
   conversationMessages: ConversationMessage[] = [];
   userId: string;
-  selectedChat: MessageDto;
-  selectedProduct: Product;
-  newConversationData: NewConversationDto;
-  newConversationSelected: boolean;
+
+
+
   APIENDPOINT_BACKEND = environment.APIENDPOINT_BACKEND;
 
   @ViewChild('container') messagesContainer: ElementRef;
-  @ViewChild('messageInput') messageInput: ElementRef;
+
 
   constructor(
     private chatService: ChatService,
     private messageService: MessageService,
     private route: ActivatedRoute,
+    private router:Router,
     private store: Store<AppState>
   ) {}
 
   ngOnInit() {
     this.store.dispatch(CHAT_ACTIONS.resetMessagesRecieved());
 
-    this.chatService.receiveChat().subscribe((message) => {
-      if (message.conversationId === this.selectedChat.conversationId) {
-        this.conversationMessages.push(message);
-        this.scrollBottom();
-      }
-    });
 
     this.store.pipe(select(getUserId), take(1)).subscribe((id) => {
       this.userId = id;
@@ -63,46 +57,9 @@ export class ChatComponent implements OnInit {
     );
   }
 
-  sendMessage(event) {
-    const message = event.target.value;
 
-    this.newConversationSelected
-      ? this.sendFirstMessage(message)
-      : this.sendOneMessage(message);
-  }
-
-  sendFirstMessage(message: string) {
-    this.newConversationSelected = false;
-    this.messageInput.nativeElement.value = '';
-    const { productId, sellerId } = this.route.snapshot.queryParams;
-    this.newConversationData = {
-      productId,
-      sellerId,
-      buyerId: this.userId,
-      message,
-    };
-
-    this.messageService
-      .sendFirstMessage(this.newConversationData)
-      .subscribe((conversationId) => {
-        this.selectedChat = {
-          senderId: this.userId,
-          recieverId: this.userId === sellerId ? 0 : sellerId,
-          conversationId,
-        };
-        this.conversationMessages.push({ ...this.selectedChat, message });
-      });
-  }
-
-  sendOneMessage(message: string) {
-    this.chatService.sendMessage({ ...this.selectedChat, message });
-    this.conversationMessages.push({ ...this.selectedChat, message });
-    this.messageInput.nativeElement.value = '';
-    this.scrollBottom();
-  }
 
   startNewConversation() {
-    this.newConversationSelected = true;
     const { productId } = this.route.snapshot.queryParams;
     this.newConversation$ = this.store.pipe(
       select(selectOneProduct(productId))
@@ -110,25 +67,14 @@ export class ChatComponent implements OnInit {
   }
 
   selectInboxConversation(product: ProductMiniature) {
-    this.newConversationSelected = false;
-    this.selectedProduct = product.product;
-    this.selectedChat = {
+   const selectedChat= {
       conversationId: product.conversationId,
-      recieverId:
-        product.buyerId === this.userId ? product.sellerId : product.buyerId,
-      senderId: this.userId,
-    };
+        recieverId:
+      product.buyerId === this.userId ? product.sellerId : product.buyerId,
+        senderId: this.userId,
+    }
 
-    this.messageService
-      .getMessages(product.conversationId)
-      .pipe(
-        take(1),
-        tap((messages) => {
-          this.conversationMessages = messages;
-          this.scrollBottom();
-        })
-      )
-      .subscribe();
+    this.router.navigate(['user-menu/conversation'],{state: {product:product,selectedChat:selectedChat,isNewConversation:false} });
   }
 
   scrollBottom() {

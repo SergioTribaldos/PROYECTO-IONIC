@@ -7,6 +7,7 @@ import { SharedModule } from '@shared/shared.module';
 import { MaterialModule } from '@shared/material/material.module';
 import { ChatComponent } from './chat/chat.component';
 import {IonicModule} from '@ionic/angular';
+import {ConversationComponent} from './chat/conversation/conversation.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
         component: ChatComponent,
       },
       {
+        path: 'conversation',
+        component: ConversationComponent,
+      },
+      {
         path: '**',
         component: UserProductsComponent,
       },
@@ -30,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [UserMenuComponent, UserProductsComponent, ChatComponent],
+  declarations: [UserMenuComponent, UserProductsComponent, ChatComponent,ConversationComponent],
     imports: [
         CommonModule,
         RouterModule,

@@ -1,4 +1,32 @@
-<mat-sidenav-container class="chat-container">
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Chat</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/all"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Bandeja de entrada
+    </ion-list-header>
+
+    <ion-item  *ngFor="let conversation of serverConversations$ | async"
+               (click)="selectInboxConversation(conversation)">
+      <ion-avatar slot="start">
+        <img [src]="APIENDPOINT_BACKEND + '/' + conversation.pictureUrl">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ conversation.recieverUserName }}</h2>
+        <p>{{ conversation.title }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+<!--<mat-sidenav-container class="chat-container">
   <mat-sidenav mode="side" opened>
     <div class="inbox-title">
       Bandeja de entrada
@@ -90,4 +118,4 @@
       </mat-card>
     </div>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container>-->

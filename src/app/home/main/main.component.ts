@@ -14,6 +14,7 @@ import { CHAT_ACTIONS } from 'src/app/user-menu/chat/store/chat.actions';
 import { ChatService } from '@shared/chat.service';
 import {IonInfiniteScroll} from '@ionic/angular';
 import {AuthActions} from '../../auth/store/action-types';
+import {getUnreadMessages} from '../../user-menu/chat/store/chat.selectors';
 
 @Component({
   selector: 'app-main',
@@ -23,6 +24,7 @@ import {AuthActions} from '../../auth/store/action-types';
 export class MainComponent implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
+  unreadMessages$: Observable<number>;
   products$: Observable<Product[]>;
   loading$: Observable<boolean>;
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -40,6 +42,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loading$ = this.store.pipe(select(isLoading));
   }
   ngOnInit(): void {
+    this.unreadMessages$ = this.store.pipe(select(getUnreadMessages));
     this.chatService
       .receiveChat()
       .pipe(takeUntil(this.destroy$))

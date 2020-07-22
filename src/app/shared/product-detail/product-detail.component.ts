@@ -1,20 +1,15 @@
-import {Component, OnInit, Inject, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {Observable, combineLatest, Subscription} from 'rxjs';
+import {Observable, combineLatest} from 'rxjs';
 import {AppState} from 'src/app/reducers';
-import {ActivatedRoute} from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from 'src/environments/environment';
-import {map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
+import {map, take, tap, withLatestFrom} from 'rxjs/operators';
 import {Product} from 'src/app/home/product/model/product';
 import {selectOneProduct} from 'src/app/home/product/store/product.selector';
 import {PRODUCT_ACTIONS} from 'src/app/home/product/store/product.actions';
 import {setConditionClass} from 'src/app/home/product/constants/functions';
-import {selectAllUserProducts, selectOneUserProduct, selectUserProducts} from 'src/app/user-menu/store/user-product.selectors';
+import { selectOneUserProduct, selectUserProducts} from 'src/app/user-menu/store/user-product.selectors';
 import {AlertController, ModalController} from '@ionic/angular';
 import {USER_PRODUCT_ACTIONS} from '../../user-menu/store/user-product.actions';
 
@@ -63,6 +58,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
+    private router: Router,
     private modalController: ModalController,
     public alertController: AlertController
   ) {
@@ -136,5 +132,13 @@ export class ProductDetailComponent implements OnInit {
    });
 
    await alert.present();
+  }
+
+  newChat() {
+    this.product$.pipe(
+      tap((product)=>{
+        this.router.navigate(['user-menu/conversation'],{state: {sellerId: product.user.id, productId: product.id,isNewConversation:true} });
+      })
+    ).subscribe()
   }
 }

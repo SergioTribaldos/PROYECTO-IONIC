@@ -39,7 +39,10 @@
         </ion-col>
         <ion-col>
           <div routerLink="/user-menu/chat">
-            <ion-icon class="footer-action-icon" name="chatbubble-ellipses-outline"></ion-icon>
+            <div>
+              <ion-icon class="footer-action-icon" name="chatbubble-ellipses-outline"></ion-icon>
+              <ion-badge color="primary">{{unreadMessages$|async}}</ion-badge>
+            </div>
             <div class="footer-action-description">Chat</div>
           </div>
         </ion-col>
@@ -55,7 +58,6 @@
             <div class="footer-action-description">Logout</div>
           </div>
         </ion-col>
-
       </ion-row>
     </ion-grid>
   </ion-toolbar>

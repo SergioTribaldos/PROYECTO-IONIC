@@ -20,3 +20,8 @@ ion-col{
   font-size: 11px;
   text-align: center;
 }
+ion-badge{
+  right: 21%;
+  position: absolute;
+  bottom: 62%;
+}

@@ -65,7 +65,9 @@
   </ion-card>
 </ion-content>
 <ion-footer *ngIf="!(isUserProduct$|async);else deleteProductContainer" class="ion-no-border">
-  <ion-button color="secondary" expand="block" [routerLink]="['/user-menu/chat']"
+  <ion-button color="secondary" expand="block"
+              (click)="newChat()"
+              [routerLink]="['/user-menu/conversation']"
               [queryParams]="{sellerId: (product$|async).user.id, productId: (product$|async).id}">
     Chat
   </ion-button>

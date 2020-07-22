@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/user-menu/chat"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="messages-container">
+    <ion-row class="ion-align-items-baseline">
+      <ion-col>
+        <ion-row
+          *ngFor="let message of conversationMessages"
+          [class]="message.senderId == userId ?'ion-justify-content-end':'ion-justify-content-start'">
+
+          <ion-chip
+            [color]="message.senderId == userId ?'primary':'secondary'">
+            <ion-label>{{message.message}}</ion-label>
+          </ion-chip>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-grid class="chat-input-container">
+    <ion-row>
+      <ion-col size="10">
+        <ion-input #messageInput placeholder="Mensaje"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-align-self-center">
+        <ion-row class="ion-justify-content-center">
+          <ion-icon class="send-icon" name="send" (click)="sendMessage(messageInput.value)"></ion-icon>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
